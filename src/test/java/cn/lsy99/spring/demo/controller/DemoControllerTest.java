@@ -1,4 +1,4 @@
-package cn.lsy99.spring.demo.Controller;
+package cn.lsy99.spring.demo.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

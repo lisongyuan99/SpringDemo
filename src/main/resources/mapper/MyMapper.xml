@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lsy99.spring.demo.dao.MyMapper">
+    <select id="selectOne" resultType="cn.lsy99.spring.demo.entity.table.Student">
+        select * from student where id = #{id}
+    </select>
+    <select id="selectMany" resultType="cn.lsy99.spring.demo.entity.table.Student">
+        select * from student
+    </select>
+    <select id="complexSelect" resultType="cn.lsy99.spring.demo.entity.dto.StudentCourseName">
+        select student.name as studentName, course.name as courseName, student_course.score as course
+            from student
+                join student_course on student.id = student_course.student_id
+                join course on course.id = student_course.course_id
+    </select>
+    <resultMap id="StudentCourseName" type="cn.lsy99.spring.demo.entity.dto.StudentCourseName">
+        <result column="student.name" property="studentName" />
+        <result column="course.name" property="courseName" />
+        <result column="student_course.score" property="score" />
+    </resultMap>
+    <select id="complexSelect2" resultMap="StudentCourseName">
+        select student.name, course.name, student_course.score
+            from student
+                join student_course on student.id = student_course.student_id
+                join course on course.id = student_course.course_id
+    </select>
+    <insert id="add">
+        insert into test_table
+            values (#{id}, #{info}, #{canNull})
+    </insert>
+    <insert id="addReturnId" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into test_table
+            values (#{id}, #{info}, #{canNull})
+    </insert>
+    <update id="update">
+        update test_table
+            set note=#{note}
+            where note=#{old}
+    </update>
+    <delete id="delete">
+        delete from test_table
+            where info=#{info}
+    </delete>
+</mapper>
